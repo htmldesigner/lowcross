@@ -62,13 +62,14 @@ class RegisterController extends Controller
         switch ($data['agree']):
             case 'step_1':
                 $validator = Validator::make($data, [
-                    'name' => ['required', 'string', 'max:255', 'unique:users'],
+                    'name' => ['required', 'string','min:3','max:255', 'unique:users'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:5', 'confirmed'],
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'hint' => ['required', 'string', 'min:5', 'max:255'],
-                    'security_question' => ['required', 'string', 'min:5', 'max:255'],
-                    'secret_answer' => ['required', 'string', 'max:255'],
-                    'find_us' => ['required', 'string', 'max:255'],
+                    'security_question' => ['required', 'string'],
+                    'secret_answer' => ['required', 'string', 'min:5', 'max:255'],
+                    'how_did_you_find_us' => ['required', 'string', 'max:255'],
+                    'find_us' => ['required', 'string','same:how_did_you_find_us', 'max:255'],
                 ]);
                 return $validator;
                 break;
@@ -80,26 +81,26 @@ class RegisterController extends Controller
                     'last_name' => ['required', 'string', 'min:3', 'max:250'],
                     'middle_name' => ['required', 'string', 'min:3', 'max:250'],
                     'registration_number' => ['required', 'string', 'min:5', 'max:250'],
-                    'organization_name' => ['required', 'string', 'min:5', 'max:250'],
+                    'law_firm_name' => ['required', 'string', 'min:5', 'max:250'],
                     'country' => ['required', 'string', 'min:1', 'max:250'],
-                    'street_name' => ['required', 'string', 'min:5', 'max:250'],
-                    'suite' => ['required', 'string', 'max:250'],
-                    'city' => ['required', 'string', 'max:250'],
-                    'states' => ['required', 'string', 'max:250'],
-                    'province' => ['required', 'string', 'max:250'],
-                    'zip_code' => ['required', 'string', 'max:250'],
+                    'street_name' => ['required', 'string', 'min:3', 'max:250'],
+                    'suite' => ['max:250'],
+                    'city' => ['max:250'],
+                    'states' => ['max:250'],
+                    'province' => ['max:250'],
+                    'zip_code' => ['max:250'],
                     'phone_int' => ['required', 'string', 'max:250'],
                     'phone_pref' => ['required', 'string', 'max:250'],
-                    'phone_num' => ['required', 'string', 'max:250'],
-                    'fax_int' => ['required', 'string', 'max:250'],
-                    'fax_pref' => ['required', 'string', 'max:250'],
-                    'fax_num' => ['required', 'string', 'max:250'],
-                    'mobile_int' => ['required', 'string', 'max:250'],
-                    'mobile_pref' => ['required', 'string', 'max:250'],
-                    'mobile_num' => ['required', 'string', 'max:250'],
-                    'website' => ['required', 'string', 'max:250'],
-                    'primary_contact' => ['required', 'string', 'max:250'],
-                    'description_profile' => ['required', 'string', 'max:500'],
+                    'phone_num' => ['required', 'string','min:3', 'max:120'],
+                    'fax_int' => ['max:250'],
+                    'fax_pref' => ['max:250'],
+                    'fax_num' => ['max:250'],
+                    'mobile_int' => ['max:250'],
+                    'mobile_pref' => ['max:250'],
+                    'mobile_num' => ['max:250'],
+                    'website' => ['max:250'],
+                    'primary_contact' => ['required', 'string','min:3', 'max:250'],
+                    'description_profile' => ['max:500'],
                 ]);
                 return $validator;
                 break;
@@ -157,7 +158,7 @@ class RegisterController extends Controller
 
             case 'step_4':
                 $validator = Validator::make($data, [
-                    'school_name' => ['required', 'string', 'min:5', 'max:255'],
+                    'school_name' => ['required', 'string', 'min:3', 'max:255'],
                     'gender' => ['required'],
                     'date' => ['required'],
                     'month' => ['required'],
@@ -209,7 +210,7 @@ class RegisterController extends Controller
             return redirect()->route('contact');
         }else
         {
-            return "not work";
+            redirect()->back();
         }
 
     }
@@ -228,7 +229,7 @@ class RegisterController extends Controller
 
         }else
         {
-            return "not work";
+            redirect()->back();
         }
 
     }
@@ -246,7 +247,7 @@ class RegisterController extends Controller
 
         }else
         {
-            return "not work";
+            redirect()->back();
         }
     }
 
@@ -260,16 +261,10 @@ class RegisterController extends Controller
 
             session($request->all());
 
-//            dd(session()->all());
-
-            $user = $this->create((session()->all()));
-
-            $this->guard()->login($user);
-
-            return  redirect($this->redirectPath());
+            return redirect()->route('submission');
         }else
         {
-            return "not work";
+            redirect()->back();
         }
     }
 
@@ -279,15 +274,19 @@ class RegisterController extends Controller
 
         if ($request->has('agree'))
         {
-            $this->validator($request->all())->validate();
+            $this->validator($request->all());
 
             session($request->all());
 
+            $user = $this->create((session()->all()));
 
+            $this->guard()->login($user);
+
+            return  redirect($this->redirectPath());
 
         }else
         {
-            return "not work";
+            redirect()->back();
         }
     }
 
@@ -334,7 +333,7 @@ class RegisterController extends Controller
         ]);
 
         $organization = Organization::create([
-            'organization_name' => $data['organization_name'],
+            'organization_name' => $data['law_firm_name'],
             'country' => $data['country'],
             'street_name' => $data['street_name'],
             'suite' => $data['suite'],

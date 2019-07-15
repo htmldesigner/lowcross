@@ -15,8 +15,8 @@ class CreatePracticesTable extends Migration
     {
         Schema::create('practices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('practice_id')->unsigned()->nullable();
-            $table->foreign('practice_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('administrative_law');
             $table->string('adoptions');
             $table->string('appellate_practice');

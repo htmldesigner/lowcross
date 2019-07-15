@@ -32,7 +32,8 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <select class="input-txt" name="prefix" required>
+                                    <select class="input-txt" name="prefix">
+                                        <option value="">Select</option>
                                         <option value="Mr." @if (session()->get('prefix') == "Mr.") {{ 'selected' }} @endif>Mr.</option>
                                         <option value="Mrs." @if (session()->get('prefix') == "Mrs.") {{ 'selected' }} @endif>Mrs.</option>
                                         <option value="Ms." @if (session()->get('prefix') == "Ms.") {{ 'selected' }} @endif>Ms.</option>
@@ -40,77 +41,80 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('prefix')
+                        <div class="col-sm-3 required {{$errors->has('prefix')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span>First Name: </span>
+                            <span>{{ __('First Name:')}} </span>
+                            @if($errors->has('first_name'))
+                                <p>{{$errors->first('first_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="first_name" value="{{ session()->get('first_name') }}" required>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('first_name')
+                        <div class="col-sm-3 required {{$errors->has('first_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span>Last Name: </span>
+                            <span>{{ __('Last Name:')}}</span>
+                            @if($errors->has('last_name'))
+                                <p>{{$errors->first('last_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="last_name" value="{{ session()->get('last_name') }}" required>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('last_name')
+                        <div class="col-sm-3 required {{$errors->has('last_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span>Middle Name:  </span>
+                            <span>{{ __('Middle Name:')}}</span>
+                            @if($errors->has('middle_name'))
+                                <p>{{$errors->first('middle_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="middle_name" value="{{ session()->get('middle_name') }}" required>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('middle_name')
+                        <div class="col-sm-3 required {{$errors->has('middle_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span style="line-height:110%;">Attorney Registration Number:</span>
+                            <span style="line-height:110%;">{{ __('Attorney Registration Number:')}}</span>
+                            @if($errors->has('registration_number'))
+                                <p>{{$errors->first('registration_number')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="registration_number" value="{{ session()->get('registration_number') }}" required>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('registration_number')
+                        <div class="col-sm-3 required {{$errors->has('registration_number')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="main-box-content-section">
                     <div class="clear pt20">
                         <div class="col-sm-3 reg-title">
-                            <span>Law Firm Name:</span>
+                            <span>{{ __('Law Firm Name:')}}</span>
+                            @if($errors->has('law_firm_name'))
+                                <p>{{$errors->first('law_firm_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="organization_name" value="{{ session()->get('organization_name') }}" required>
+                            <input class="input-txt" type="text" name="law_firm_name" value="{{ session()->get('law_firm_name') }}" required>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('organization_name')
+                        <div class="col-sm-3 required {{$errors->has('law_firm_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -118,29 +122,28 @@
                             <span>Country:</span>
                         </div>
                         <div class="col-sm-6">
-                            <select class="input-txt" name="country" value="{{ session()->get('country') }}">
+                            <select class="input-txt" name="country">
                                 <option value="">Select Your Country (by default United States)</option>
-                                <option value="2">UK</option>
-                                <option value="2">Brasil</option>
+                                <option value="UK" @if (session()->get('country') == "UK") {{ 'selected' }} @endif>UK</option>
+                                <option value="Brasil" @if (session()->get('country') == "Brasil") {{ 'selected' }} @endif>Brasil</option>
                             </select>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('country')
+                        <div class="col-sm-3 required {{$errors->has('country')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span>Main Address:</span>
+                            <span>{{ __('Main Address:')}}</span>
+                            @if($errors->has('street_name'))
+                                <p>{{$errors->first('street_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="street_name" value="{{ session()->get('street_name') }}" placeholder="Street name">
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('street_name')
+                        <div class="col-sm-3 required {{$errors->has('street_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -150,7 +153,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <input class="input-txt" type="text" name="suite" value="{{ session()->get('street_name') }}" placeholder="Suite #">
+                                    <input class="input-txt" type="text" name="suite" value="{{ session()->get('suite') }}" placeholder="Suite #">
                                 </div>
                             </div>
                         </div>
@@ -172,14 +175,15 @@
                             <span></span>
                         </div>
                         <div class="col-sm-6">
-                            <select class="input-txt" name="states" value="{{ session()->get('states') }}">
-                                <option value="1">State drop down menu if US or Canada</option>
-                                <option value="2">Alabama</option>
-                                <option value="3">Alaska</option>
-                                <option value="4">Arizona</option>
-                                <option value="5">Arkansas</option>
-                                <option value="6">California</option>
+                            <select class="input-txt" name="states">
+                                <option value="0">State drop down menu if US or Canada</option>
+                                <option value="Alabama" @if (session()->get('states') == "Alabama") {{ 'selected' }} @endif>Alabama</option>
+                                <option value="Alaska" @if (session()->get('states') == "Alaska") {{ 'selected' }} @endif>Alaska</option>
+                                <option value="Arizona" @if (session()->get('states') == "Arizona") {{ 'selected' }} @endif>Arizona</option>
+                                <option value="Arkansas" @if (session()->get('states') == "Arkansas") {{ 'selected' }} @endif>Arkansas</option>
+                                <option value="California" @if (session()->get('states') == "California") {{ 'selected' }} @endif>California</option>
                             </select>
+
                         </div>
                         <div class="col-sm-3">
                         </div>
@@ -213,29 +217,30 @@
                     <div class="clear pt20">
                         <div class="col-sm-3 reg-title">
                             <span>Phone:</span>
+                            @if($errors->has('phone_num'))
+                                <p>{{$errors->first('phone_num')}}</p>
+                            @endif
                         </div>
 
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="phone_int" value="{{ session()->get('phone_int') }}" placeholder="">
+                                    <input class="input-txt" type="text" required name="phone_int" value="{{ session()->get('phone_int') }}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="phone_pref" value="{{ session()->get('phone_pref') }}" placeholder="">
+                                    <input class="input-txt" type="text" required name="phone_pref" value="{{ session()->get('phone_pref') }}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-8 col-sm-6 col-xs-6">
-                                    <input class="input-txt" type="text" name="phone_num" value="{{ session()->get('phone_num') }}" placeholder="">
+                                    <input class="input-txt" type="text" required name="phone_num" value="{{ session()->get('phone_num') }}" placeholder="">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required  active">
-                            @error('phone_num')
+                        <div class="col-sm-3 required {{$errors->has('phone_num')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -265,7 +270,7 @@
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span>Mobile: </span>
+                            <span>{{ __('Mobile:')}} </span>
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
@@ -284,7 +289,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 required">
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -299,15 +304,16 @@
                     </div>
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
-                            <span style="line-height:110%;">Primary Administrative Contact:</span>
+                            <span style="line-height:110%;">{{ __('Primary Administrative Contact:')}}</span>
+                            @if($errors->has('primary_contact'))
+                                <p>{{$errors->first('primary_contact')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" type="text" name="primary_contact" value="{{ session()->get('primary_contact') }}" placeholder="">
                         </div>
-                        <div class="col-sm-3 required">
-                            @error('primary contact')
+                        <div class="col-sm-3 required {{$errors->has('primary_contact')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -319,7 +325,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <textarea class="profile-area" type="text" name="description_profile" required placeholder=""></textarea>
+                            <textarea class="profile-area" type="text" name="description_profile" placeholder=""></textarea>
                         </div>
                         <div class="col-sm-3">
                         </div>

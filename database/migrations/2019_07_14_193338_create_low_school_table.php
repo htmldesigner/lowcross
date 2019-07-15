@@ -15,8 +15,8 @@ class CreateLowSchoolTable extends Migration
     {
         Schema::create('low_school', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('school_id')->unsigned()->nullable();
-            $table->foreign('school_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('school_name');
             $table->string('date_graduated');
             $table->string('month_graduated');

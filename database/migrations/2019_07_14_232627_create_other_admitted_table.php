@@ -15,16 +15,14 @@ class CreateOtherAdmittedTable extends Migration
     {
         Schema::create('other_admitted', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('other_id')->unsigned()->nullable();
-            $table->foreign('other_id')->references('id')->on('users')->onDelete('cascade');
-
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('other_admitted_month');
             $table->string('other_admitted_date');
             $table->string('other_admitted_year');
             $table->string('other_supreme_court');
             $table->string('other_registration_number');
             $table->string('other_registration_date');
-
             $table->timestamps();
         });
     }

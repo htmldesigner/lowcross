@@ -15,16 +15,16 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('org_id')->unsigned()->nullable();
-            $table->foreign('org_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('organization_name');
             $table->string('country');
             $table->string('street_name');
-            $table->string('suite');
-            $table->string('city');
-            $table->string('states');
-            $table->string('province');
-            $table->string('zip_code');
+            $table->string('suite')->nullable();
+            $table->string('city')->nullable();
+            $table->string('states')->nullable();
+            $table->string('province')->nullable();
+            $table->string('zip_code')->nullable();
             $table->timestamps();
         });
     }

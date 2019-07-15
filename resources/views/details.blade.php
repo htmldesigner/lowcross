@@ -28,15 +28,16 @@
                 <div class="main-box-content-section">
                     <div class="clear">
                         <div class="col-sm-3 reg-title">
-                            <span>Law School Name: </span>
+                            <span>{{ __('Law School Name:')}}</span>
+                            @if($errors->has('school_name'))
+                                <p>{{$errors->first('school_name')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <input class="input-txt" name="school_name" value="{{session()->get('school_name')}}" type="text"  required>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('school_name')
+                        <div class="col-sm-3 required {{$errors->has('school_name')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -47,14 +48,14 @@
                         <div class="col-sm-6" style="overflow:hidden;">
                             <div class="row">
                                 <div class="col-sm-6 col-xs-4 pad0">
-                                    <select class="input-txt" name="month">
+                                    <select class="input-txt" name="month" required>
                                         <option value="">Month</option>
                                         <option value="January">January</option>
                                         <option value="February">February</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="date">
+                                    <select class="input-txt" name="date" required>
                                         <option value="">Date</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -69,10 +70,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('year')
+                        <div class="col-sm-3 required {{$errors->has('year')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -90,10 +89,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('gender')
+                        <div class="col-sm-3 required {{$errors->has('gender')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -112,10 +109,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('first_language')
+                        <div class="col-sm-3 required {{$errors->has('first_language')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="clear pt10">
@@ -137,10 +132,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('second_language')
+                        <div class="col-sm-3 required {{$errors->has('second_language')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
                 </div>
@@ -161,14 +154,14 @@
                         <div class="col-sm-6" style="overflow:hidden;">
                             <div class="row">
                                 <div class="col-sm-6 col-xs-4 pad0">
-                                    <select class="input-txt" name="admitted_month">
+                                    <select class="input-txt" name="admitted_month" required>
                                         <option value="">Month</option>
                                         <option value="January">January</option>
                                         <option value="February">February</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="admitted_date">
+                                    <select class="input-txt" name="admitted_date" required>
                                         <option value="">Date</option>
                                         <option value="1">01</option>
                                         <option value="2">02</option>
@@ -183,10 +176,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('admitted_year')
+                        <div class="col-sm-3 required {{$errors->has('admitted_year')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -207,10 +198,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('supreme_court')
+                        <div class="col-sm-3 required {{$errors->has('supreme_court')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -242,8 +231,6 @@
                         <div class="col-sm-3">
                         </div>
                     </div>
-
-
 
                     <div class="clear pt20">
                         <div class="col-sm-3 reg-title">
@@ -283,10 +270,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('other_admitted_year')
+                        <div class="col-sm-3 required {{$errors->has('other_admitted_year')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 
@@ -307,10 +292,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required active">
-                            @error('other_supreme_court')
+                        <div class="col-sm-3 required {{$errors->has('other_supreme_court')?"active":""}}">
                             <span>required</span>
-                            @enderror
                         </div>
                     </div>
 

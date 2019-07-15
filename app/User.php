@@ -39,32 +39,32 @@ class User extends Authenticatable
 
     public function contact()
     {
-        return $this->hasOne('App\Contact', 'contact_id', 'id');
+        return $this->hasOne('App\Contact', 'user_id', 'id');
     }
 
     public function organization()
     {
-        return $this->hasOne('App\Organization', 'org_id', 'id');
+        return $this->hasOne('App\Organization', 'user_id', 'id');
     }
 
     public function practice()
     {
-        return $this->hasOne('App\Practice', 'practice_id', 'id');
+        return $this->hasOne('App\Practice', 'user_id', 'id');
     }
 
     public function school()
     {
-        return $this->hasOne('App\School', 'school_id', 'id');
+        return $this->hasOne('App\School', 'user_id', 'id');
     }
 
     public function admitted()
     {
-        return $this->hasOne('App\Admitted', 'admitted_id', 'id');
+        return $this->hasOne('App\Admitted', 'user_id', 'id');
     }
 
     public function otherAdmitted()
     {
-        return $this->hasOne('App\Admitted', 'other_id', 'id');
+        return $this->hasOne('App\Admitted', 'user_id', 'id');
     }
 
 }

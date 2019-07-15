@@ -15,8 +15,8 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('contact_id')->unsigned()->nullable();
-            $table->foreign('contact_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('prefix');
             $table->string('first_name');
             $table->string('last_name');
@@ -25,15 +25,15 @@ class CreateContactsTable extends Migration
             $table->string('phone_int');
             $table->string('phone_pref');
             $table->string('phone_num');
-            $table->string('fax_int');
-            $table->string('fax_pref');
-            $table->string('fax_num');
-            $table->string('mobile_int');
-            $table->string('mobile_pref');
-            $table->string('mobile_num');
-            $table->string('website');
+            $table->string('fax_int')->nullable();
+            $table->string('fax_pref')->nullable();
+            $table->string('fax_num')->nullable();
+            $table->string('mobile_int')->nullable();
+            $table->string('mobile_pref')->nullable();
+            $table->string('mobile_num')->nullable();
+            $table->string('website')->nullable();
             $table->string('primary_contact');
-            $table->string('description_profile');
+            $table->string('description_profile')->nullable();
             $table->timestamps();
         });
     }
