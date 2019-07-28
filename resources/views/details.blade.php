@@ -100,11 +100,11 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <select class="input-txt" name="first_language">
+                                    <select class="input-txt" name="first_language[]">
                                         <option value="">Select first language</option>
-                                        <option value="English" @if (session()->get('first_language') == "English") {{ 'selected' }} @endif>English</option>
-                                        <option value="Russian" @if (session()->get('first_language') == "Russian") {{ 'selected' }} @endif>Russian</option>
-                                        <option value="Deutsch" @if (session()->get('first_language') == "Deutsch") {{ 'selected' }} @endif>Deutsch</option>
+                                        @foreach($languages as $language)
+                                          <option value="{{$language->id}}" @if (session()->get('first_language') == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -119,24 +119,25 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <select class="input-txt" name="second_language">
-                                        <option value="">Select second language</option>
-                                        <option value="English" @if (session()->get('second_language') == "English") {{ 'selected' }} @endif>English</option>
-                                        <option value="Russian" @if (session()->get('second_language') == "Russian") {{ 'selected' }} @endif>Russian</option>
-                                        <option value="Deutsch" @if (session()->get('second_language') == "Deutsch") {{ 'selected' }} @endif>Deutsch</option>
-                                    </select>
+                                <div class="col-sm-6 languages">
+                                        <select class="input-txt" name="first_language[]">
+                                            <option value="">Select second language</option>
+                                            @foreach($languages as $language)
+                                                <option value="{{$language->id}}" @if (session()->get("first_language") == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
+                                            @endforeach
+                                        </select>
                                 </div>
-                                <div class="col-sm-6" style="text-align:right;">
-                                    <button class="add-adr">+Add language</button>
+                                <div class="col-sm-6 languages_button" style="text-align:right;">
+                                    <button type="button" class="add-adr" id="add-lang">+Add language</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('second_language')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('first_language')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
                 </div>
+
                 <div class="main-box-content-section">
                     <div class="clear">
                         <div class="col-sm-3 reg-title">
@@ -383,4 +384,36 @@
         </div>
     </div>
 </section>
+
+<script>
+    var form_lang = '<div class="lang_block_clone">' +
+        '<select class="input-txt" name="first_language[]">' +
+        '<option value="">Select second language</option>' +
+        '@foreach($languages as $language)' +
+        '<option value="{{$language->id}}"' +
+        '@if (session()->get('second_language') == $language->id) {{'selected'}}' +
+        '@endif>{{$language->language}}</option>' +
+        '@endforeach' +
+        '</select>' +
+        '<div class="control-buttons">' +
+        '<button id="remove-lang" type="button"  class="add-adr">- Remove</button>' +
+        '</div>' +
+        '';
+    $(document).on( "click", '#add-lang', function() {
+        $(form_lang).appendTo(".languages");
+    });
+
+    $(document).on( "click",'#remove-lang', function() {
+        if(confirm('Exactly?')){
+            $(this).parent().parent().remove();
+        }
+        else {
+            return false;
+        }
+    });
+</script>
+
+
+
 @endsection
+

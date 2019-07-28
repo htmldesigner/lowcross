@@ -4,16 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class Language extends Model
 {
-    protected $table = 'schools';
-
     protected $guarded = [];
 
     public $timestamps = false;
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsToMany('App\School', 'language_school', 'language_id', 'user_id');
     }
 }

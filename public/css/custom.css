@@ -740,7 +740,10 @@ h4.check{
 }
 .matter_langs .lang.ru{
 	background-image:url(../img/flag-ru.jpg);	
-}	
+}
+
+
+
 .case_details,
 .case_statistics{
 	border:1px solid #5A6B85;
@@ -1140,6 +1143,28 @@ img.cw2{
 .attorney_langs .lang.ru{
 	background-image:url(../img/flag-ru.jpg);	
 }
+
+
+.flag{
+	width: 32px;
+	height: auto;
+	padding-right: 10px;
+}
+
+.lang_flag{
+	margin: 5px 0;
+}
+
+.lang_block_clone{
+	position: relative;
+}
+
+.control-buttons{
+	position: absolute;
+	right: -210px;
+	top: 0px;
+}
+
 .social-profiles .sociale.fb{
 	background-image:url(../img/fb-icon.png);
 }

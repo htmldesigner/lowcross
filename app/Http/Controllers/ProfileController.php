@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Language;
 use App\School;
 use App\User;
 use App\Contact;
@@ -21,14 +22,13 @@ class ProfileController extends Controller
     {
 
         if (Auth::check()) {
-//            $publication = User::find(Auth::user()->id)->profile(['id'])->where('id', Auth::user()->id)->get();
             $publication = User::select()->where('id', Auth::user()->id)->get();
             $contact = Contact::select()->where('id', Auth::user()->id)->get();
-            $school = School::select()->where('id', Auth::user()->id)->get();
+            $schools = School::select()->where('id', Auth::user()->id)->get();
+            $languages = User::find(Auth::user()->id)->language()->groupBy('language_user.user_id', 'language_id')->select('language', 'image')->get();
         }
          $user = Auth::user()->name;
-        //        $id = Auth::user()->id;
-        return view('profile')->with(['publication' => $publication, 'name' => $user, 'school' => $school, 'contact' => $contact ]);
+        return view('profile')->with(['publication' => $publication, 'name' => $user, 'schools' => $schools, 'contact' => $contact, 'languages' => $languages ]);
     }
 
     /**

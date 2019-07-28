@@ -64,7 +64,11 @@ class User extends Authenticatable
 
     public function otherAdmitted()
     {
-        return $this->hasOne('App\Admitted', 'user_id', 'id');
+        return $this->hasOne('App\OtherAdmitted', 'user_id', 'id');
     }
 
+    public function language()
+    {
+        return $this->belongsToMany('App\Language', 'language_user', 'user_id', 'language_id');
+    }
 }

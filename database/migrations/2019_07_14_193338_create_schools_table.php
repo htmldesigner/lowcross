@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLowSchoolTable extends Migration
+class CreateSchoolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLowSchoolTable extends Migration
      */
     public function up()
     {
-        Schema::create('low_school', function (Blueprint $table) {
+        Schema::create('schools', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -22,8 +22,6 @@ class CreateLowSchoolTable extends Migration
             $table->string('month_graduated');
             $table->string('year_graduated');
             $table->string('gender');
-            $table->string('first_language');
-            $table->string('second_language');
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ class CreateLowSchoolTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('low_school');
+        Schema::dropIfExists('schools');
     }
 }

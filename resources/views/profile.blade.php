@@ -27,20 +27,17 @@
                     </div>
                     <div class="info">
                         <div class="company_name">
-
                             @foreach($contact as $user)
                                 <h2>{{$user->first_name }} {{$user->last_name }}</h2>
                             @endforeach
-
-
                         </div>
                         <div class="info-left">
                             <ul class="">
                                 <li><span>Legal Experience:</span> <span>18 years</span></li>
                                 <li><span>Law School:</span>
                                     <span>
-                                        @foreach($school as $school)
-                                            {{$school->school_name }}
+                                        @foreach($schools as $school)
+                                            {{$school->school_name}}
                                         @endforeach
                                     </span>
                                 </li>
@@ -62,10 +59,9 @@
                         </div>
                         <div class="attorney_langs">
                             <p style="font-weight:bold;">Langs</p>
-                            <p class="lang eng">English</p>
-                            <p class="lang deu">Deu</p>
-                            <p class="lang ru">Russsian</p>
-                            <p class="lang fr">Fr</p>
+                            @foreach($languages as $lang)
+                                <p class="lang_flag"><img class="flag" src="{{$lang->image}}" alt="Alt">{{$lang->language}}</p>
+                            @endforeach
                             <div class="social-profiles">
                                 <p class="social-profiles-head">Social Network Profile:</p>
                                 <p class="sociale fb">Facebook</p>

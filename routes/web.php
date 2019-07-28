@@ -28,7 +28,8 @@ Route::post('/contact', 'Auth\RegisterController@registerContact')->name('contac
 Route::get('/practice', function () { return view('practice'); });
 Route::post('/practice', 'Auth\RegisterController@registerPractice')->name('practice');
 
-Route::get('/details', function () { return view('details'); });
+//Route::get('/details', function () { return view('details'); });
+Route::get('/details', 'Auth\RegisterController@showDetails')->name('details');
 Route::post('/details', 'Auth\RegisterController@registerDetails')->name('details');
 
 Route::get('/submission', function () { return view('submission'); });

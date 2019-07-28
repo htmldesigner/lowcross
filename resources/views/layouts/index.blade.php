@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <section class="header">
@@ -76,9 +78,10 @@
         </div>
     </div>
 </section>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/my-script.js"></script>
+
+{{--<script src="js/my-script.js"></script>--}}
+<script src="{{ asset('js/modal.js')}}"></script>
+<script src="{{ asset('js/my-script.js')}}"></script>
 </body>
 
 </html>

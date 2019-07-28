@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Admitted;
+use App\Language;
 use App\Organization;
 use App\OtherAdmitted;
 use App\Practice;
@@ -163,8 +164,8 @@ class RegisterController extends Controller
                     'date' => ['required'],
                     'month' => ['required'],
                     'year' => ['required', 'required_with: date, month'],
-                    'first_language' => ['required'],
-                    'second_language' => ['required'],
+                    "first_language"    => "required|array|min:2",
+//                    "first_language.*"  => "required|string|distinct|min:3",
 
                     'supreme_court' => ['required'],
                     'admitted_month' => ['required'],
@@ -215,7 +216,6 @@ class RegisterController extends Controller
 
     }
 
-
     public function registerContact(Request $request)
     {
 
@@ -251,6 +251,11 @@ class RegisterController extends Controller
         }
     }
 
+    public function showDetails(){
+
+        $languages = Language::all();
+        return view('details')->with(['languages' => $languages]);
+    }
 
     public function registerDetails(Request $request)
     {
@@ -289,6 +294,7 @@ class RegisterController extends Controller
             redirect()->back();
         }
     }
+
 
 
     /**
@@ -397,9 +403,10 @@ class RegisterController extends Controller
             'year_graduated' => $data['year'],
             'month_graduated' => $data['month'],
             'gender' => $data['gender'],
-            'first_language' => $data['first_language'],
-            'second_language' => $data['second_language'],
         ]);
+
+
+
 
 
         $admitted = Admitted::create([
@@ -422,6 +429,8 @@ class RegisterController extends Controller
 
         ]);
 
+
+        $user->language()->sync($data['first_language']);
 
         $user->contact()->save($contact);
         $user->organization()->save($organization);
