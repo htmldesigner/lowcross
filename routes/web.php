@@ -25,10 +25,9 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 Route::get('/contact', function () { return view('contact'); });
 Route::post('/contact', 'Auth\RegisterController@registerContact')->name('contact');
 
-Route::get('/practice', function () { return view('practice'); });
+Route::get('/practice', 'Auth\RegisterController@showPractice')->name('practice');
 Route::post('/practice', 'Auth\RegisterController@registerPractice')->name('practice');
 
-//Route::get('/details', function () { return view('details'); });
 Route::get('/details', 'Auth\RegisterController@showDetails')->name('details');
 Route::post('/details', 'Auth\RegisterController@registerDetails')->name('details');
 

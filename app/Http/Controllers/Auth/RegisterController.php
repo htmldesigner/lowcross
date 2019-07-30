@@ -108,51 +108,7 @@ class RegisterController extends Controller
 
             case 'step_3':
                 $validator = Validator::make($data, [
-                    'administrative_law' => ['required'],
-                    'adoptions' =>['required'],
-                    'appellate_practice' =>['required'],
-                    'bankruptcy' =>['required'],
-                    'business_law' =>['required'],
-                    'civil_practice' =>['required'],
-                    'civil_rights' =>['required'],
-                    'class_actions' =>['required'],
-                    'constitutional_law' =>['required'],
-                    'contracts' =>['required'],
-                    'copyrights' =>['required'],
-                    'corporate_law' =>['required'],
-                    'arbitration' =>['required'],
-                    'entertainment_law' =>['required'],
-                    'patents' =>['required'],
-                    'divorce' =>['required'],
-                    'education_law' =>['required'],
-                    'employment_law' =>['required'],
-                    'estate_litigation' =>['required'],
-                    'family_law' =>['required'],
-                    'government_law' =>['required'],
-                    'general_practice' =>['required'],
-                    'health_law' =>['required'],
-                    'immigration_law' =>['required'],
-                    'import_and_export_law' =>['required'],
-                    'intellectual_property_law' =>['required'],
-                    'internet_law' =>['required'],
-                    'collections' =>['required'],
-                    'identity_theft' =>['required'],
-                    'torts' =>['required'],
-                    'landlord_and_tenant_law' =>['required'],
-                    'malpractice' =>['required'],
-                    'mergers_and_acquisitions' =>['required'],
-                    'personal_injury' =>['required'],
-                    'products_liability' =>['required'],
-                    'real_estate' =>['required'],
-                    'securities_law' =>['required'],
-                    'sports_law' =>['required'],
-                    'trade_law' =>['required'],
-                    'trademarks' =>['required'],
-                    'traffic_violations' =>['required'],
-                    'trusts_and_estates' =>['required'],
-                    'criminal_law' =>['required'],
-                    'international_law' =>['required'],
-                    'wills_and_probation' =>['required'],
+//                   'practice' => ['array']
                 ]);
                 return $validator;
                 break;
@@ -164,8 +120,8 @@ class RegisterController extends Controller
                     'date' => ['required'],
                     'month' => ['required'],
                     'year' => ['required', 'required_with: date, month'],
-                    "first_language"    => "required|array|min:2",
-//                    "first_language.*"  => "required|string|distinct|min:3",
+                    "language"    => ['required|array|min:2'],
+//                    "language.*"  => "required|string|distinct|min:3",
 
                     'supreme_court' => ['required'],
                     'admitted_month' => ['required'],
@@ -234,9 +190,16 @@ class RegisterController extends Controller
 
     }
 
+    public function showPractice(){
+
+        $practices = Practice::all();
+//dd($practices);
+        return view('practice')->with(['practices' => $practices]);
+
+    }
+
     public function registerPractice(Request $request)
     {
-
         if ($request->has('agree'))
         {
             $this->validator($request->all())->validate();
@@ -254,7 +217,9 @@ class RegisterController extends Controller
     public function showDetails(){
 
         $languages = Language::all();
+
         return view('details')->with(['languages' => $languages]);
+
     }
 
     public function registerDetails(Request $request)
@@ -272,7 +237,6 @@ class RegisterController extends Controller
             redirect()->back();
         }
     }
-
 
     public function registerSubmission(Request $request)
     {
@@ -294,8 +258,6 @@ class RegisterController extends Controller
             redirect()->back();
         }
     }
-
-
 
     /**
      * Create a new user instance after a valid registration.
@@ -405,10 +367,6 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
         ]);
 
-
-
-
-
         $admitted = Admitted::create([
             'supreme_court' => $data['supreme_court'],
             'admitted_month' => $data['admitted_month'],
@@ -429,8 +387,7 @@ class RegisterController extends Controller
 
         ]);
 
-
-        $user->language()->sync($data['first_language']);
+        $user->language()->sync($data['language']);
 
         $user->contact()->save($contact);
         $user->organization()->save($organization);

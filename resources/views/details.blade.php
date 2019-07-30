@@ -100,16 +100,16 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <select class="input-txt" name="first_language[]">
+                                    <select class="input-txt" name="language[]">
                                         <option value="">Select first language</option>
                                         @foreach($languages as $language)
-                                          <option value="{{$language->id}}" @if (session()->get('first_language') == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
+                                          <option value="{{$language->id}}" @if (session()->get('language') == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('first_language')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('language')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
@@ -120,10 +120,10 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6 languages">
-                                        <select class="input-txt" name="first_language[]">
+                                        <select class="input-txt" name="language[]">
                                             <option value="">Select second language</option>
                                             @foreach($languages as $language)
-                                                <option value="{{$language->id}}" @if (session()->get("first_language") == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
+                                                <option value="{{$language->id}}" @if (session()->get("language") == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
                                             @endforeach
                                         </select>
                                 </div>
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('first_language')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('language')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
@@ -387,11 +387,11 @@
 
 <script>
     var form_lang = '<div class="lang_block_clone">' +
-        '<select class="input-txt" name="first_language[]">' +
+        '<select class="input-txt" name="language[]">' +
         '<option value="">Select second language</option>' +
         '@foreach($languages as $language)' +
         '<option value="{{$language->id}}"' +
-        '@if (session()->get('second_language') == $language->id) {{'selected'}}' +
+        '@if (session()->get('language') == $language->id) {{'selected'}}' +
         '@endif>{{$language->language}}</option>' +
         '@endforeach' +
         '</select>' +

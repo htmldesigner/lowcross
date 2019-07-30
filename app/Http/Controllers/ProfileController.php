@@ -22,13 +22,13 @@ class ProfileController extends Controller
     {
 
         if (Auth::check()) {
-            $publication = User::select()->where('id', Auth::user()->id)->get();
-            $contact = Contact::select()->where('id', Auth::user()->id)->get();
-            $schools = School::select()->where('id', Auth::user()->id)->get();
+            $contact = User::find(Auth::user()->id)->contact()->get();
+            $schools = User::find(Auth::user()->id)->school()->get();
             $languages = User::find(Auth::user()->id)->language()->groupBy('language_user.user_id', 'language_id')->select('language', 'image')->get();
         }
+
          $user = Auth::user()->name;
-        return view('profile')->with(['publication' => $publication, 'name' => $user, 'schools' => $schools, 'contact' => $contact, 'languages' => $languages ]);
+        return view('profile')->with(['name' => $user, 'schools' => $schools, 'contact' => $contact, 'languages' => $languages ]);
     }
 
     /**
