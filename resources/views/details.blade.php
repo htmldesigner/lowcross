@@ -34,7 +34,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" name="school_name" value="{{session()->get('school_name')}}" type="text"  required>
+                            <input class="input-txt" name="school_name" value="{{session()->get('school_name') ? session()->get('school_name') : old('school_name')}}" type="text"  required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('school_name')?"active":""}}">
                             <span>required</span>
@@ -48,26 +48,15 @@
                         <div class="col-sm-6" style="overflow:hidden;">
                             <div class="row">
                                 <div class="col-sm-6 col-xs-4 pad0">
-                                    <select class="input-txt" name="month" required>
-                                        <option value="">Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                    </select>
+                                    <select name="month" id="monthOne" title="Month"  class='month input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="date" required>
-                                        <option value="">Date</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                    </select>
+                                    <select name="date" id="dayOne" title="Day"  class='day input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="year">
-                                        <option value="">Year</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2017">2017</option>
-                                    </select>
+                                    <select name="year" id="yearOne" title="Year" class='year input-txt'></select>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('year')?"active":""}}">
@@ -96,20 +85,23 @@
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
                             <span style="line-height:110%;">Language (spoken/written):</span>
+                            @if($errors->has('language.*'))
+                                <p>{{$errors->first('language.*')}}</p>
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <select class="input-txt" name="language[]">
+                                    <select class="input-txt" name="language[1]">
                                         <option value="">Select first language</option>
                                         @foreach($languages as $language)
-                                          <option value="{{$language->id}}" @if (session()->get('language') == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
+                                            <option value="{{$language->id}}" @if (session()->get("language") == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('language')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('language.*')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
@@ -120,7 +112,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6 languages">
-                                        <select class="input-txt" name="language[]">
+                                        <select class="input-txt" name="language[2]">
                                             <option value="">Select second language</option>
                                             @foreach($languages as $language)
                                                 <option value="{{$language->id}}" @if (session()->get("language") == $language->id) {{ 'selected' }} @endif>{{$language->language}}</option>
@@ -132,7 +124,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('language')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('language.*')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
@@ -305,7 +297,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input class="input-txt" type="text" name="other_reg_number" value="{{session()->get('other_reg_number')}}" required>
+                                    <input class="input-txt" type="text" name="other_reg_number" value="{{session()->get('other_reg_number') ? session()->get('other_reg_number') : old('other_reg_number')}}" required>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +311,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input class="input-txt" type="text" name="other_reg_date" value="{{session()->get('other_reg_date')}}" required>
+                                    <input class="input-txt" type="text" name="other_reg_date" value="{{session()->get('other_reg_date') ? session()->get('other_reg_date') : old('other_reg_date')}}" required>
                                 </div>
                                 <div class="col-sm-6" style="text-align:right;">
                                     <button class="add-adr">+Add state</button>
@@ -332,48 +324,35 @@
                 </div>
 
 
-                {{--<div class="main-box-content-section">--}}
-                    {{--<div class="clear pt10">--}}
-                        {{--<div class="col-sm-3 reg-title">--}}
-                            {{--<span>Type of Practice:   </span>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-sm-6">--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-sm-6">--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>Solo</span></label>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>Law Firm </span></label>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>In-house Counsel</span></label>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="col-sm-6">--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>Government</span></label>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>Judicial</span></label>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="chose"><label>--}}
-                                            {{--<input type="checkbox" name="" >--}}
-                                            {{--<span>Other</span></label>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-sm-3 required">--}}
-                            {{--<span>required</span>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                <div class="main-box-content-section">
+                    <div class="clear pt10">
+                        <div class="col-sm-3 reg-title">
+                            <span>Type of Practice:</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <?php $count = count($typePractices) / 2?>
+                                @foreach($typePractices->chunk($count) as $chunk)
+                                    <div class="col-sm-6">
+                                      @foreach($chunk as $typePractice)
+                                        <div class="chose"><label >
+                                          {{--<input type="hidden" name="type_practice[{{$typePractice->id}}]" value="">--}}
+                                          <input type="checkbox" name="type_practice[{{$typePractice->id}}]"
+                                            <?php $arr = session()->get('type_practice', 0);?>
+                                            value="{{$typePractice->id}}" @if (isset($arr[$typePractice->id ]) && $arr[$typePractice->id ] > 0) checked="checked" @endif>
+                                          <span>{{$typePractice->name}}</span></label>
+                                        </div>
+                                      @endforeach
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        {{--{{dd(session()->all())}}--}}
+                        <div class="col-sm-3 required {{$errors->has('type_practice')?"active":""}}">
+                            <span>required</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="main-box-content-buttons" style="clear:both;">
                     <a href="{{ route('practice') }}" class="button button-prev">Go back</a>
                     <input type="submit" class="button button-next" value="Continue" name="confirm">

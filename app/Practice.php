@@ -8,8 +8,10 @@ class Practice extends Model
 {
     protected $guarded = [];
 
+    public $timestamps = false;
+
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsToMany('App\User', 'practice_user', 'practice_id ', 'user_id');
     }
 }

@@ -49,7 +49,12 @@ class User extends Authenticatable
 
     public function practice()
     {
-        return $this->hasOne('App\Practice', 'user_id', 'id');
+        return $this->belongsToMany('App\Practice', 'practice_user', 'user_id', 'practice_id');
+    }
+
+    public function typePractice()
+    {
+        return $this->belongsToMany('App\TypePractice', 'type_practice_user', 'user_id', 'practice_id');
     }
 
     public function school()

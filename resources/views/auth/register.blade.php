@@ -121,7 +121,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-6">
-                                <input id="hint" type="text" class="input-txt form-control @error('hint') is-invalid @enderror" name="hint" value="{{ session()->get('hint') ?  session()->get('hint') : old('hint') }}" required autocomplete="hint">
+                                <input id="hint" type="text" class="input-txt form-control" name="hint" value="{{ session()->get('hint') ?  session()->get('hint') : old('hint') }}" required>
                                 <span class="field-comment">If a hint doesn’t help you remember your password, we’ll allow you to reset if after you’ve answered a security question. Please select and answer one of the questions below to setup your security question.</span>
                             </div>
                             <div class="col-sm-3 required active">
@@ -183,10 +183,10 @@
                             </div>
                             <div class="col-sm-6">
                                 <select class="input-txt" name="how_did_you_find_us">
-                                    <option value="">Select</option>
-        <option value="Internet" {{old('Internet') }}>Internet</option>
-        <option value="Friends" {{  old('Friends') }}>Friends</option>
-        <option value="Other" {{ old('Other') }}>Other</option>
+                                 <option value="">Select</option>
+                                 <option value="Internet" @if (session()->get('how_did_you_find_us') == "Internet") {{ 'selected' }} @endif>Internet</option>
+                                 <option value="Friend" @if (session()->get('how_did_you_find_us') == "Friend") {{ 'selected' }} @endif>Friend</option>
+                                 <option value="Other" @if (session()->get('how_did_you_find_us') == "Other") {{ 'selected' }} @endif>Other</option>
                                 </select>
                             </div>
                             <div class="col-sm-3 required {{$errors->has('how_did_you_find_us')?"active":""}}">
@@ -201,7 +201,8 @@
                                 @endif
                             </div>
                             <div class="col-sm-6">
-                                <input id="find_us" type="text" class="input-txt form-control @error('find_us') is-invalid @enderror" name="find_us" value="{{ session()->get('find_us') ? session()->get('find_us') : old('find_us') }}" required autocomplete="find_us" placeholder="Please cpecify">
+                              <input id="find_us" type="text" class="input-txt form-control" name="find_us"
+                              value="{{session()->get('find_us') ? session()->get('find_us') : old('find_us')}}" required placeholder="Please specify">
                             </div>
                             <div class="col-sm-3 required active">
                                 @error('find_us')

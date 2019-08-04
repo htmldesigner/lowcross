@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-
+use App\TypePractice;
 use App\Admitted;
 use App\Language;
 use App\Organization;
@@ -13,6 +13,7 @@ use App\User;
 use App\Contact;
 
 use App\Http\Controllers\Controller;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -57,9 +58,11 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+
+
     protected function validator(array $data)
     {
-
         switch ($data['agree']):
             case 'step_1':
                 $validator = Validator::make($data, [
@@ -70,7 +73,7 @@ class RegisterController extends Controller
                     'security_question' => ['required', 'string'],
                     'secret_answer' => ['required', 'string', 'min:5', 'max:255'],
                     'how_did_you_find_us' => ['required', 'string', 'max:255'],
-                    'find_us' => ['required', 'string','same:how_did_you_find_us', 'max:255'],
+                    'find_us' => ['required', 'string', 'min:3', 'max:255'],
                 ]);
                 return $validator;
                 break;
@@ -90,38 +93,39 @@ class RegisterController extends Controller
                     'states' => ['max:250'],
                     'province' => ['max:250'],
                     'zip_code' => ['max:250'],
-                    'phone_int' => ['required', 'string', 'max:250'],
-                    'phone_pref' => ['required', 'string', 'max:250'],
-                    'phone_num' => ['required', 'string','min:3', 'max:120'],
-                    'fax_int' => ['max:250'],
-                    'fax_pref' => ['max:250'],
-                    'fax_num' => ['max:250'],
-                    'mobile_int' => ['max:250'],
-                    'mobile_pref' => ['max:250'],
-                    'mobile_num' => ['max:250'],
+
                     'website' => ['max:250'],
                     'primary_contact' => ['required', 'string','min:3', 'max:250'],
                     'description_profile' => ['max:500'],
+
+                    'phone' =>"array|max:3",
+                    "phone.*"  => "required|string|min:2",
+
+                    'fax' => ['array', 'min:3', 'max:10'],
+                    'mobile' => ['array', 'min:3','max:10'],
                 ]);
                 return $validator;
                 break;
 
             case 'step_3':
                 $validator = Validator::make($data, [
-//                   'practice' => ['array']
+                   "practice"    => "array|min:0",
+//                   "practice.*"  => "required|string|distinct|min:2",
                 ]);
+
                 return $validator;
+
                 break;
 
             case 'step_4':
-                $validator = Validator::make($data, [
+                $validator = Validator::make($data,[
                     'school_name' => ['required', 'string', 'min:3', 'max:255'],
+                    "language.*"    => "required|min:1|",
                     'gender' => ['required'],
                     'date' => ['required'],
                     'month' => ['required'],
                     'year' => ['required', 'required_with: date, month'],
-                    "language"    => ['required|array|min:2'],
-//                    "language.*"  => "required|string|distinct|min:3",
+//                    "language.*"  => "required|string|distinct|min:2",
 
                     'supreme_court' => ['required'],
                     'admitted_month' => ['required'],
@@ -136,6 +140,9 @@ class RegisterController extends Controller
                     'other_admitted_year' => ['required', 'required_with: other_admitted_month, other_admitted_date'],
                     'other_reg_number' => ['required'],
                     'other_reg_date' => ['required'],
+
+                    "type_practice"    => "required|min:1",
+//                    "type_practice.*"  => "required|string|distinct|min:2",
 
                 ]);
                 return $validator;
@@ -193,7 +200,7 @@ class RegisterController extends Controller
     public function showPractice(){
 
         $practices = Practice::all();
-//dd($practices);
+
         return view('practice')->with(['practices' => $practices]);
 
     }
@@ -203,7 +210,9 @@ class RegisterController extends Controller
         if ($request->has('agree'))
         {
             $this->validator($request->all())->validate();
-
+            if (is_null($request->post('practice', null))) {
+                session(['practice' => null]);
+            };
             session($request->all());
 
             return redirect()->route('details');
@@ -218,8 +227,9 @@ class RegisterController extends Controller
 
         $languages = Language::all();
 
-        return view('details')->with(['languages' => $languages]);
+        $typePractices = TypePractice::all();
 
+        return view('details')->with(['languages' => $languages, 'typePractices' => $typePractices]);
     }
 
     public function registerDetails(Request $request)
@@ -278,24 +288,23 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        $phone = implode('', collect($data['phone'])->all());
+        $fax = implode('', collect($data['fax'])->all());
+        $mobile = implode('', collect($data['mobile'])->all());
+
         $contact = Contact::create([
             'prefix' => $data['prefix'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'middle_name' => $data['middle_name'],
             'registration_number' => $data['registration_number'],
-            'phone_int' => $data['phone_int'],
-            'phone_pref' => $data['phone_pref'],
-            'phone_num' => $data['phone_num'],
-            'fax_int' => $data['fax_int'],
-            'fax_pref' => $data['fax_pref'],
-            'fax_num' => $data['fax_num'],
-            'mobile_int' => $data['mobile_int'],
-            'mobile_pref' => $data['mobile_pref'],
-            'mobile_num' => $data['mobile_num'],
+
             'website' => $data['website'],
             'primary_contact' => $data['primary_contact'],
             'description_profile' => $data['description_profile'],
+            'phone' => $phone,
+            'fax' => $fax,
+            'mobile' => $mobile,
 
 
         ]);
@@ -309,54 +318,6 @@ class RegisterController extends Controller
             'states' => $data['states'],
             'province' => $data['province'],
             'zip_code' => $data['zip_code'],
-        ]);
-
-        $practice = Practice::create([
-            'administrative_law' => $data['administrative_law'],
-            'adoptions' => $data['adoptions'],
-            'appellate_practice' => $data['appellate_practice'],
-            'bankruptcy' => $data['bankruptcy'],
-            'business_law' => $data['business_law'],
-            'civil_practice' => $data['civil_practice'],
-            'civil_rights' => $data['civil_rights'],
-            'class_actions' => $data['class_actions'],
-            'constitutional_law' => $data['constitutional_law'],
-            'contracts' => $data['contracts'],
-            'copyrights' => $data['copyrights'],
-            'corporate_law' => $data['corporate_law'],
-            'arbitration' => $data['arbitration'],
-            'entertainment_law' => $data['entertainment_law'],
-            'patents' => $data['patents'],
-            'divorce' => $data['divorce'],
-            'education_law' => $data['education_law'],
-            'employment_law' => $data['employment_law'],
-            'estate_litigation' => $data['estate_litigation'],
-            'family_law' => $data['family_law'],
-            'government_law' => $data['government_law'],
-            'general_practice' => $data['general_practice'],
-            'health_law' => $data['health_law'],
-            'immigration_law' => $data['immigration_law'],
-            'import_and_export_law' => $data['import_and_export_law'],
-            'intellectual_property_law' => $data['intellectual_property_law'],
-            'internet_law' => $data['internet_law'],
-            'collections' => $data['collections'],
-            'identity_theft' => $data['identity_theft'],
-            'torts' => $data['torts'],
-            'landlord_and_tenant_law' => $data['landlord_and_tenant_law'],
-            'malpractice' => $data['malpractice'],
-            'mergers_and_acquisitions' => $data['mergers_and_acquisitions'],
-            'personal_injury' => $data['personal_injury'],
-            'products_liability' => $data['products_liability'],
-            'real_estate' => $data['real_estate'],
-            'securities_law' => $data['securities_law'],
-            'sports_law' => $data['sports_law'],
-            'trade_law' => $data['trade_law'],
-            'trademarks' => $data['trademarks'],
-            'traffic_violations' => $data['traffic_violations'],
-            'trusts_and_estates' => $data['trusts_and_estates'],
-            'criminal_law' => $data['criminal_law'],
-            'international_law' => $data['international_law'],
-            'wills_and_probation' => $data['wills_and_probation'],
         ]);
 
         $school = School::create([
@@ -388,10 +349,11 @@ class RegisterController extends Controller
         ]);
 
         $user->language()->sync($data['language']);
+        $user->practice()->sync($data['practice']);
+        $user->typePractice()->sync($data['type_practice']);
 
         $user->contact()->save($contact);
         $user->organization()->save($organization);
-        $user->practice()->save($practice);
         $user->school()->save($school);
         $user->admitted()->save($admitted);
         $user->otherAdmitted()->save($otherAdmitted);

@@ -27,17 +27,20 @@
                 <div class="main-box-content-section">
                     <div class="clear">
                         <div class="row">
-                            <div class="col-sm-4">
-                                @foreach($practices as $practice)
-                                    <div class="chose"><label >
-                                      <input type="hidden" name="practice[]" value="">
-                                      <input type="checkbox" name="practice[{{$practice->id}}]"
-                                         <?php $arr = session()->get('practice','default')?>
-                                         value="{{$practice->id}}" @if ($arr[$practice->id - 1] > 0) checked="checked" @endif>
-                                      <span>{{$practice->name}}</span></label>
-                                    </div>
-                                @endforeach
-                            </div>
+                            <?php $count = count($practices) / 3?>
+                            @foreach($practices->chunk($count) as $chunk)
+                                <div class="col-sm-4">
+                                    @foreach($chunk as $practice)
+                                        <div class="chose"><label >
+                                           {{--<input type="hidden" name="practice[{{$practice->id}}]" value="">--}}
+                                           <input type="checkbox" name="practice[{{$practice->id}}]"
+                                           <?php $arr = session()->get('practice', 0);?>
+                                           value="{{$practice->id}}" @if (isset($arr[$practice->id ]) && $arr[$practice->id ] > 0) checked="checked" @endif>
+                                           <span>{{$practice->name}}</span></label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

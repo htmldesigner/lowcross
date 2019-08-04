@@ -53,7 +53,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="first_name" value="{{ session()->get('first_name') }}" required>
+                         <input class="input-txt" type="text" name="first_name" value="{{session()->get('first_name') ? session()->get('first_name') : old('first_name')}}" required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('first_name')?"active":""}}">
                             <span>required</span>
@@ -67,7 +67,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="last_name" value="{{ session()->get('last_name') }}" required>
+                            <input class="input-txt" type="text" name="last_name" value="{{session()->get('last_name') ? session()->get('last_name') : old('last_name')}}" required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('last_name')?"active":""}}">
                             <span>required</span>
@@ -81,7 +81,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="middle_name" value="{{ session()->get('middle_name') }}" required>
+                            <input class="input-txt" type="text" name="middle_name" value="{{session()->get('middle_name') ? session()->get('middle_name') : old('middle_name')}}" required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('middle_name')?"active":""}}">
                             <span>required</span>
@@ -95,7 +95,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="registration_number" value="{{ session()->get('registration_number') }}" required>
+                            <input class="input-txt" type="text" name="registration_number" value="{{session()->get('registration_number') ? session()->get('registration_number') : old('registration_number')}}" required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('registration_number')?"active":""}}">
                             <span>required</span>
@@ -111,7 +111,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="law_firm_name" value="{{ session()->get('law_firm_name') }}" required>
+                            <input class="input-txt" type="text" name="law_firm_name" value="{{session()->get('law_firm_name') ? session()->get('law_firm_name') : old('law_firm_name')}}" required>
                         </div>
                         <div class="col-sm-3 required {{$errors->has('law_firm_name')?"active":""}}">
                             <span>required</span>
@@ -140,7 +140,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="street_name" value="{{ session()->get('street_name') }}" placeholder="Street name">
+                            <input class="input-txt" type="text" name="street_name" value="{{session()->get('street_name') ? session()->get('street_name') : old('street_name')}}" placeholder="Street name">
                         </div>
                         <div class="col-sm-3 required {{$errors->has('street_name')?"active":""}}">
                             <span>required</span>
@@ -153,7 +153,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <input class="input-txt" type="text" name="suite" value="{{ session()->get('suite') }}" placeholder="Suite #">
+                                    <input class="input-txt" type="text" name="suite" value="{{session()->get('suite') ? session()->get('suite') : old('suite')}}" placeholder="Suite #">
                                 </div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                             <span></span>
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="city" value="{{ session()->get('city') }}" placeholder="City">
+                            <input class="input-txt" type="text" name="city" value="{{session()->get('city') ? session()->get('city') : old('city')}}" placeholder="City">
                         </div>
                         <div class="col-sm-3">
                         </div>
@@ -193,7 +193,7 @@
                             <span></span>
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="province" value="{{ session()->get('province') }}" placeholder="Province for other countries">
+                            <input class="input-txt" type="text" name="province" value="{{session()->get('province') ? session()->get('province') : old('province')}}" placeholder="Province for other countries">
                         </div>
                         <div class="col-sm-3">
                         </div>
@@ -204,7 +204,7 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input class="input-txt" type="text" name="zip_code" value="{{ session()->get('zip_code') }}" placeholder="Zip Code/Postal Code">
+                                    <input class="input-txt" type="text" name="zip_code" value="{{session()->get('zip_code') ? session()->get('zip_code') : old('zip_code')}}" placeholder="Zip Code/Postal Code">
                                 </div>
                                 <div class="col-sm-6" style="text-align:right;">
                                     <button class="add-adr">+Add address</button>
@@ -217,51 +217,53 @@
                     <div class="clear pt20">
                         <div class="col-sm-3 reg-title">
                             <span>Phone:</span>
-                            @if($errors->has('phone_num'))
-                                <p>{{$errors->first('phone_num')}}</p>
+                            @if($errors->has('phone.*'))
+                                <p>{{$errors->first('phone.*')}}</p>
                             @endif
                         </div>
 
                         <div class="col-sm-6">
                             <div class="row">
+                                <?php $phone = session()->get('phone');?>
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" required name="phone_int" value="{{ session()->get('phone_int') }}" placeholder="">
+                                  <input class="input-txt" type="text" required name="phone[]" value="{{ $phone[0] }}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" required name="phone_pref" value="{{ session()->get('phone_pref') }}" placeholder="">
+                                    <input class="input-txt" type="text" required name="phone[]" value="{{ $phone[1] }}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-8 col-sm-6 col-xs-6">
-                                    <input class="input-txt" type="text" required name="phone_num" value="{{ session()->get('phone_num') }}" placeholder="">
+                                    <input class="input-txt" type="text" required name="phone[]" value="{{ $phone[2] }}" placeholder="">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 required {{$errors->has('phone_num')?"active":""}}">
+                        <div class="col-sm-3 required {{$errors->has('phone.*')?"active":""}}">
                             <span>required</span>
                         </div>
                     </div>
-
+{{--{{dd($arr[0])}}--}}
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
                             <span>Fax:</span>
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
+                                <?php $fax = session()->get('fax');?>
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="fax_int" value="{{ session()->get('fax_int') }}" placeholder="">
+                                    <input class="input-txt" type="text" name="fax[]" value="{{$fax[0]}}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2 col-sm-3 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="fax_pref" value="{{ session()->get('fax_pref') }}" placeholder="" >
+                                    <input class="input-txt" type="text" name="fax[]" value="{{$fax[1]}}" placeholder="" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-8 col-sm-6 col-xs-6">
-                                    <input class="input-txt" type="text" name="fax_num" value="{{ session()->get('fax_num') }}" placeholder="">
+                                    <input class="input-txt" type="text" name="fax[]" value="{{$fax[2]}}" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -274,18 +276,19 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
+                                <?php $mobile = session()->get('mobile');?>
                                 <div class="col-sm-2 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="mobile_int" value="{{ session()->get('mobile_int') }}" placeholder="">
+                                    <input class="input-txt" type="text" name="mobile[]" value="{{$mobile[0]}}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-2 col-xs-3 pr0">
-                                    <input class="input-txt" type="text" name="mobile_pref" value="{{ session()->get('mobile_pref') }}" placeholder="">
+                                    <input class="input-txt" type="text" name="mobile[]" value="{{ $mobile[1]}}" placeholder="">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-8 col-xs-6">
-                                    <input class="input-txt" type="text" name="mobile_num" value="{{ session()->get('mobile_num') }}" placeholder="">
+                                    <input class="input-txt" type="text" name="mobile[]" value="{{$mobile[2]}}" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -297,7 +300,7 @@
                             <span>Website:</span>
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="website" value="{{ session()->get('website') }}" placeholder="http://">
+                            <input class="input-txt" type="text" name="website" value="{{session()->get('website') ? session()->get('website') : old('website')}}" placeholder="http://">
                         </div>
                         <div class="col-sm-3">
                         </div>
@@ -310,7 +313,7 @@
                             @endif
                         </div>
                         <div class="col-sm-6">
-                            <input class="input-txt" type="text" name="primary_contact" value="{{ session()->get('primary_contact') }}" placeholder="">
+                            <input class="input-txt" type="text" name="primary_contact" value="{{session()->get('primary_contact') ? session()->get('primary_contact') : old('primary_contact')}}" placeholder="">
                         </div>
                         <div class="col-sm-3 required {{$errors->has('primary_contact')?"active":""}}">
                             <span>required</span>

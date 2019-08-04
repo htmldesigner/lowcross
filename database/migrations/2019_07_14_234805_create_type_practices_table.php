@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypePracticeTable extends Migration
+class CreateTypePracticesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTypePracticeTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_practice', function (Blueprint $table) {
+        Schema::create('type_practices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name', 128);
+            $table->integer('status')->default('0')->unsigned();
         });
     }
 
@@ -26,6 +27,6 @@ class CreateTypePracticeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_practice');
+        Schema::dropIfExists('type_practices');
     }
 }

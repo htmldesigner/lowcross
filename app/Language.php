@@ -12,6 +12,6 @@ class Language extends Model
 
     public function user()
     {
-        return $this->belongsToMany('App\School', 'language_school', 'language_id', 'user_id');
+        return $this->belongsToMany('App\User', 'language_user', 'language_id', 'user_id');
     }
 }
