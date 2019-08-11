@@ -8,9 +8,9 @@ class TypePractice extends Model
 {
     protected $table = 'type_practices';
 
-    protected $guarded = [];
-
     public $timestamps = false;
+
+    protected $guarded = [];
 
     public function user()
     {

@@ -244,7 +244,7 @@
                             <span>required</span>
                         </div>
                     </div>
-{{--{{dd($arr[0])}}--}}
+
                     <div class="clear pt10">
                         <div class="col-sm-3 reg-title">
                             <span>Fax:</span>

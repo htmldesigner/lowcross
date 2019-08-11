@@ -23,7 +23,6 @@ class CreateOtherAdmittedTable extends Migration
             $table->string('other_supreme_court');
             $table->string('other_registration_number');
             $table->string('other_registration_date');
-            $table->timestamps();
         });
     }
 

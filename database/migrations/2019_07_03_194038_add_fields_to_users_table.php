@@ -14,6 +14,7 @@ class AddFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('image', 255)->nullable()->after('name');;
             $table->string('hint')->after('password');
             $table->string('security_question')->after('hint');
             $table->string('secret_answer')->after('security_question');

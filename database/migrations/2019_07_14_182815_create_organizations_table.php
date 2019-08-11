@@ -25,7 +25,6 @@ class CreateOrganizationsTable extends Migration
             $table->string('states')->nullable();
             $table->string('province')->nullable();
             $table->string('zip_code')->nullable();
-            $table->timestamps();
         });
     }
 

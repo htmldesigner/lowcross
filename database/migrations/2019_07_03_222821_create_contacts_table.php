@@ -23,21 +23,11 @@ class CreateContactsTable extends Migration
             $table->string('middle_name');
             $table->string('registration_number');
             $table->string('phone');
-//            $table->string('phone_int');
-//            $table->string('phone_pref');
-//            $table->string('phone_num');
             $table->string('fax')->nullable();
-//            $table->string('fax_int')->nullable();
-//            $table->string('fax_pref')->nullable();
-//            $table->string('fax_num')->nullable();
             $table->string('mobile')->nullable();
-//            $table->string('mobile_int')->nullable();
-//            $table->string('mobile_pref')->nullable();
-//            $table->string('mobile_num')->nullable();
             $table->string('website')->nullable();
             $table->string('primary_contact');
             $table->string('description_profile')->nullable();
-            $table->timestamps();
         });
     }
 

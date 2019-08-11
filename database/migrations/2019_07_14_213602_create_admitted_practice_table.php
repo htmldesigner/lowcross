@@ -23,7 +23,6 @@ class CreateAdmittedPracticeTable extends Migration
             $table->string('supreme_court');
             $table->string('registration_number');
             $table->string('registration_date');
-            $table->timestamps();
         });
     }
 

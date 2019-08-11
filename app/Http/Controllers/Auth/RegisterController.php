@@ -11,6 +11,7 @@ use App\Practice;
 use App\School;
 use App\User;
 use App\Contact;
+use Carbon\Carbon;
 
 use App\Http\Controllers\Controller;
 use Carbon\CarbonPeriod;
@@ -125,19 +126,20 @@ class RegisterController extends Controller
                     'date' => ['required'],
                     'month' => ['required'],
                     'year' => ['required', 'required_with: date, month'],
-//                    "language.*"  => "required|string|distinct|min:2",
 
                     'supreme_court' => ['required'],
-                    'admitted_month' => ['required'],
-                    'admitted_date' => ['required'],
-                    'admitted_year' => ['required', 'required_with: admitted_month, admitted_date'],
+//                    'admitted_month' => ['required'],
+//                    'admitted_date' => ['required'],
+//
+//                    'admitted_year' => ['required', 'required_with: admitted_month, admitted_date'],
                     'reg_number' => ['required'],
                     'reg_date' => ['required'],
 
                     'other_supreme_court' => ['required'],
-                    'other_admitted_month' => ['required'],
-                    'other_admitted_date' => ['required'],
-                    'other_admitted_year' => ['required', 'required_with: other_admitted_month, other_admitted_date'],
+//                    'other_admitted_month' => ['required'],
+//                    'other_admitted_date' => ['required'],
+//
+//                    'other_admitted_year' => ['required', 'required_with: other_admitted_month, other_admitted_date'],
                     'other_reg_number' => ['required'],
                     'other_reg_date' => ['required'],
 
@@ -320,19 +322,19 @@ class RegisterController extends Controller
             'zip_code' => $data['zip_code'],
         ]);
 
+        $graduated =  Carbon::parse($data['date'] . '-' . (int)$data['month'] . '-' . $data['year']);
+
         $school = School::create([
             'school_name' => $data['school_name'],
-            'date_graduated' => $data['date'],
-            'year_graduated' => $data['year'],
-            'month_graduated' => $data['month'],
+            'graduated' => $graduated,
             'gender' => $data['gender'],
         ]);
 
         $admitted = Admitted::create([
             'supreme_court' => $data['supreme_court'],
-            'admitted_month' => $data['admitted_month'],
-            'admitted_date' => $data['admitted_date'],
-            'admitted_year' => $data['admitted_year'],
+            'admitted_month' => $data['monthTwo'],
+            'admitted_date' => $data['dateTwo'],
+            'admitted_year' => $data['yearTwo'],
             'registration_number' => $data['reg_number'],
             'registration_date' => $data['reg_date'],
 
@@ -340,9 +342,9 @@ class RegisterController extends Controller
 
         $otherAdmitted = OtherAdmitted::create([
             'other_supreme_court' => $data['other_supreme_court'],
-            'other_admitted_month' => $data['other_admitted_month'],
-            'other_admitted_date' => $data['other_admitted_date'],
-            'other_admitted_year' => $data['other_admitted_year'],
+            'other_admitted_month' => $data['monthThree'],
+            'other_admitted_date' => $data['dateThree'],
+            'other_admitted_year' => $data['yearThree'],
             'other_registration_number' => $data['other_reg_number'],
             'other_registration_date' => $data['other_reg_date'],
 

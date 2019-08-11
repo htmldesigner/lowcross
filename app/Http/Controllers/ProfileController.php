@@ -22,13 +22,52 @@ class ProfileController extends Controller
     {
 
         if (Auth::check()) {
-            $contact = User::find(Auth::user()->id)->contact()->get();
+            $contacts = User::find(Auth::user()->id)->contact()->get();
             $schools = User::find(Auth::user()->id)->school()->get();
             $languages = User::find(Auth::user()->id)->language()->groupBy('language_user.user_id', 'language_id')->select('language', 'image')->get();
+            $adresses = User::find(Auth::user()->id)->organization()->get();
+
+            $adresse = array();
+            foreach ($adresses as $item){
+                $adresse = $item;
+            }
+
+            $contact = array();
+            foreach ($contacts as $item){
+                $contact = $item;
+            }
         }
 
-         $user = Auth::user()->name;
-        return view('profile')->with(['name' => $user, 'schools' => $schools, 'contact' => $contact, 'languages' => $languages ]);
+//        $image = Auth::user()->image;
+
+        if(Auth::user()->image){
+            $image = Auth::user()->image;
+        }else{
+            $image = 'img/empty.jpg';
+        }
+
+        $user = Auth::user()->name;
+
+        return view('profile')->with(['name' => $user, 'image' => $image, 'schools' => $schools, 'contact' => $contact, 'languages' => $languages, 'adresse' =>  $adresse]);
+    }
+
+    public function loadImage(Request $request)
+    {
+        if (!empty($request->file('image'))){
+
+            $path = $request->file('image')->store('uploads', 'public');
+
+            $user = User::find(Auth::user()->id);
+
+            $user->image = $path;
+
+            $user->save();
+
+        }else{
+            return redirect()->route('profile');
+        }
+
+        return redirect()->route('profile');
     }
 
     /**

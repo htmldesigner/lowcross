@@ -45,11 +45,11 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <p class="printable"><a href="">Printable Version</a></p>
-                                <iframe style="width:100%;height:400px;border:1px solid #abe;box-shadow:none;" src="agreement.html"></iframe>
+                                <p class="printable"><a href="{{ route('agreement') }}">Printable Version</a></p>
+                                <iframe style="width:100%;height:400px;border:1px solid #abe;box-shadow:none;" src="{{URL::to('/agreement')}}"></iframe>
                                 <p class="accept">By clicking on ‘I accept’ below you are agreeing to the <a href="">Terms of Service</a> above and the <a href="">Privacy Policy</a>.</p>
                                 <div style="text-align:center;">
-                                    <a href="#" class="button button-accept">I accept. Create my account</a>
+                                    <a  id="accept" class="button button-accept">I accept. Create my account</a>
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -61,7 +61,7 @@
                 <div class="main-box-content-buttons" style="clear:both;">
 
                         <a href="{{ route('details') }}" class="button button-prev">Go back</a>
-                        <input type="submit" class="button button-next" value="Continue" name="confirm">
+                        <input type="submit" style="display: none" id="submit" class="button button-next" value="Continue" name="confirm">
                         <input type="text" style="display: none" value="step_5" name="agree">
                 </div>
             </div>

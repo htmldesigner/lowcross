@@ -16,7 +16,19 @@
             <div class="main-box-content">
                 <div class="attorney">
                     <div class="block-face">
-                        <img src="img/Bronstein.webp">
+                        @if(Auth::user()->image)
+                            <img src="{{asset('/storage/' . $image)}}" alt="Alt">
+                        @else
+                            <img src="{{asset($image)}}" alt="Alt">
+                        @endif
+                        <form id="uploadimage" method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="uploadbtn" class="uploadButton">Load photo</label>
+                                <input style="opacity: 0; z-index: -1;" type="file" name="image" id="uploadbtn">
+                            </div>
+                            {{--<button class="btn btn-default" type="submit">Load photo</button>--}}
+                        </form>
                         <div class="list">
                             <p class="bm">Bookmarks <span id="bm">(35)</span></P>
                             <p class="itp">In the Process <span id="itp">(2)</span></P>
@@ -27,9 +39,7 @@
                     </div>
                     <div class="info">
                         <div class="company_name">
-                            @foreach($contact as $user)
-                                <h2>{{$user->first_name }} {{$user->last_name }}</h2>
-                            @endforeach
+                           <h2>{{$contact->first_name }} {{$contact->last_name }}</h2>
                         </div>
                         <div class="info-left">
                             <ul class="">
@@ -48,12 +58,15 @@
                                     Law Office Name
                                 </div>
                                 <div class="blue-block-addr">
-                                    <p>895 Sheridan Drive, Suite 212 </p>
-                                    <p>Mountain View , CA 90582 </p>
-                                    <p>(650) 000-0000</p>
+                                    <p>
+                                    {{($adresse->country or $adresse->states) ? $adresse->country .', '. $adresse->states : $adresse->country}}
+                                    </p>
+                                    <p>{{$adresse->street_name}}, Suite {{$adresse->suite}} </p>
+                                    <p>{{$adresse->province}}, {{$adresse->city}} {{$adresse->zip_code}} </p>
+                                    <p>{{$contact->phone}}</p>
                                 </div>
                                 <div class="blue-block-footer">
-                                    <a href="">View Map</a> <a href="">Lawyer’s Web Site</a>
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{$adresse->country}}+{{$adresse->street_name}}">View Map</a> <a href="">Lawyer’s Web Site</a>
                                 </div>
                             </div>
                         </div>

@@ -147,25 +147,13 @@
                         <div class="col-sm-6" style="overflow:hidden;">
                             <div class="row">
                                 <div class="col-sm-6 col-xs-4 pad0">
-                                    <select class="input-txt" name="admitted_month" required>
-                                        <option value="">Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                    </select>
+                                    <select name="monthTwo" id="monthTwo" title="Month"  class='month input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="admitted_date" required>
-                                        <option value="">Date</option>
-                                        <option value="1">01</option>
-                                        <option value="2">02</option>
-                                    </select>
+                                    <select name="dateTwo" id="dayTwo" title="Day"  class='day input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="admitted_year">
-                                        <option value="">Year</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2017">2017</option>
-                                    </select>
+                                    <select name="yearTwo" id="yearTwo" title="Year" class='year input-txt'></select>
                                 </div>
                             </div>
                         </div>
@@ -241,25 +229,13 @@
                         <div class="col-sm-6" style="overflow:hidden;">
                             <div class="row">
                                 <div class="col-sm-6 col-xs-4 pad0">
-                                    <select class="input-txt" name="other_admitted_month">
-                                        <option value="">Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                    </select>
+                                    <select name="monthThree" id="monthThree" title="Month"  class='month input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="other_admitted_date">
-                                        <option value="">Date</option>
-                                        <option value="1">01</option>
-                                        <option value="2">02</option>
-                                    </select>
+                                    <select name="dateThree" id="dayThree" title="Day"  class='day input-txt'></select>
                                 </div>
                                 <div class="col-sm-3 col-xs-4 pad0">
-                                    <select class="input-txt" name="other_admitted_year">
-                                        <option value="">Year</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2017">2017</option>
-                                    </select>
+                                    <select name="yearThree" id="yearThree" title="Year" class='year input-txt'></select>
                                 </div>
                             </div>
                         </div>
