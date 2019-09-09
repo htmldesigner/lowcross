@@ -32,10 +32,10 @@
             <div class="header-nav-burder" id="menu">Menu</div>
             <div class="header-nav-list">
                 <a href="/" class="header-nav-list-item">home</a>
-                <a href="#" class="header-nav-list-item">about us</a>
-                <a href="#" class="header-nav-list-item">faq</a>
-                <a href="#" class="header-nav-list-item">testimonials</a>
-                <a href="#" class="header-nav-list-item">contact us</a>
+                <a href="{{route('about')}}" class="header-nav-list-item">about us</a>
+                <a href="{{route('faq')}}" class="header-nav-list-item">faq</a>
+                <a href="{{route('testimonials')}}" class="header-nav-list-item">testimonials</a>
+                <a href="{{route('contact-us')}}" class="header-nav-list-item">contact us</a>
                 <div class="header-nav-share">
                     <g:plusone></g:plusone>
                 </div>
@@ -51,22 +51,22 @@
     <div class="footer-nav">
         <div class="container">
             <div class="footer-nav-list">
-                <a href="#" class="footer-nav-list-item">
+                <a href="\" class="footer-nav-list-item">
                     Home
                 </a>
-                <a href="#" class="footer-nav-list-item">
+                <a href="{{route('about')}}" class="footer-nav-list-item">
                     About Us
                 </a>
-                <a href="#" class="footer-nav-list-item">
+                <a href="{{route('faq')}}" class="footer-nav-list-item">
                     FAQ
                 </a>
-                <a href="#" class="footer-nav-list-item">
+                <a href="{{route('privacy-policy')}}" class="footer-nav-list-item">
                     Privacy Policy
                 </a>
-                <a href="#" class="footer-nav-list-item">
+                <a href="{{route('terms-conditions')}}" class="footer-nav-list-item">
                     Terms & Conditions
                 </a>
-                <a href="#" class="footer-nav-list-item">
+                <a href="{{route('contact-us')}}" class="footer-nav-list-item">
                     Contact Us
                 </a>
             </div>
@@ -74,7 +74,7 @@
     </div>
     <div class="footer-copiring">
         <div class="container">
-            Copyright © 2018 Switchlaw.com. All rights reserved.
+            Copyright © <?php echo date("Y")?> Switchlaw.com. All rights reserved.
         </div>
     </div>
 </section>

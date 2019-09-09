@@ -38,8 +38,6 @@ class ProfileController extends Controller
             }
         }
 
-//        $image = Auth::user()->image;
-
         if(Auth::user()->image){
             $image = Auth::user()->image;
         }else{

@@ -10,7 +10,7 @@
                 </div>
                 <div class="gold-border">
                     <div>
-                        About us
+                        <a href="{{route('about')}}">About us</a>
                     </div>
                 </div>
                 <div class="gold-border">
